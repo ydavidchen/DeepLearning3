@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-
-## This script was run on my local machine where training/test images were downloaded
-## The pixel numpy arrays were exported for cloud computing
+# processData.py 
+# This script was run on my local machine where training/test images were downloaded
+# The pixel numpy arrays were exported for cloud computing
 
 __title__ = "Part 1: Converting and Exporting Pixel Matrices"
 __author__ = "David Chen"
-__copyright__ = "Copyright 2018"
+__copyright__ = "Copyright 2018 David Chen"
 __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "David Chen"

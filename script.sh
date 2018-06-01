@@ -9,10 +9,10 @@
 
 echo "Training CNN network....";
 cd /global/scratch/ydchen;
-echo $PWD
+echo $PWD;
 module load python/3.6-Miniconda;
 source activate DeepLearning3;
-echo "Virtual environment activated!"
+echo "Virtual environment activated!";
 python3 trainDeepCNN.py;
 echo "Process complete!";
 
