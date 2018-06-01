@@ -8,16 +8,16 @@
 
 ## Approach
 
-* Prior to modeling, both the training and test data have been extracted into 227x227x3 numpy arrays using the script `processData.py`.
-* The original implementation of ImageNet (AlexNet), later implemented in library Keras, was modified to accommodate multi-task learning problem (there the number of tasks is 85) with 25 epochs.
+* Prior to modeling, both the training and test data have been extracted and reshaped as 227x227x3 numpy arrays. See script `processData.py`.
+* The original implementation of ImageNet (AlexNet), later implemented in library Keras, was modified to accommodate the present multitask learning problem (there the number of tasks is 85) with 25 epochs.
   - Instead of "accuracy", a custom implementation of F1 Score was used as the metric for optimization for each epoch.
   - Stochastic gradient descent with 0.9 momentum was used to optimize the _binary_crossentropy_ objective.
   - A sigmoid final activation layer (instead of softmax proposed by the original ImageNet) was implemented to estimate class labels. These are implemented in the script `trainDeepCNN.py`.
 * Training performance:
-  - On final epoch: `loss: 0.3010 - customF1: 0.8104 - val_loss: 0.3588 - val_customF1: 0.7728`
-  - Training Accuracy: 82.65%
-  - Validation Accuracy: 77.27%
-  - Training F1 score: 0.83
+  - On final epoch: `0.2731 - customF1: 0.8309 - val_loss: 0.3775 - val_customF1: 0.7703`
+  - Training Accuracy: 82.17%
+  - Validation Accuracy: 77.02%
+  - Training F1 score: 0.82
   - Dev-Set F1 score: 0.77
 
 ## File Structure
@@ -52,9 +52,14 @@ conda install -c conda-forge keras
 
 #### Model Architecture
 
+High Performance Computing (HPC) on the Linux cluster was used. Prior to actual code running, both Linux HPC and Google Cloud Platform (GCP) were also used for testing purposes.
+
+The snippet below shows the latest model for submission:
+
 ```
-DEFAULT_USER$ python3 trainDeepCNN.py
-#...
+python3 trainDeepCNN.py
+
+# ...
 Layer (type)                 Output Shape              Param #   
 =================================================================
 input_1 (InputLayer)         (None, 227, 227, 3)       0         
@@ -108,18 +113,24 @@ Non-trainable params: 704
 # conda env remove --name DeepLearning3 #Proceed ([y]/n)? y
 ```
 
-With 4x8 = 32 Linux-cluster CPUs, each _epoch_ takes approximately 18 minutes to run depending on the resource used, traffic (if cluster), etc.
+With 4x8=32 Linux-cluster CPUs, each _epoch_ takes approximately 18 minutes to run.
+
+## Limitations
+
+* Model interpretability and difficulty in grid search
+* System discrepancies (e.g. python and package versions)
 
 ## Credit
 
 **Acknowledgements**
 
-* Resources: Dartmouth Research Computing (Linux Cluster)
+* Resources: Dartmouth Research Computing (HPC)
 * Organizer: HackerEarth
 
 **References**
 
+* Krizhevsky A et al. ImageNet Classification with Deep Convolutional Neural Networks. Advances in Neural Information Processing Systems 25 (NIPS 2012).
+  - Implementation by Shikar V. and Dan D. (GitHub)
 * Chollet F et al. Keras <https://keras.io> (2015)
-* Krizhevsky A et al. ImageNet Classification with Deep Convolutional Neural Networks. Advances in Neural Information Processing Systems 25 (NIPS 2012)
 
-Copyright &copy 2018 David Chen (will be transferred if winning or retained otherwise)
+Copyright &copy; 2018 David Chen
