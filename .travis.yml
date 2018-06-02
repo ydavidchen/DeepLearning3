@@ -1,12 +1,8 @@
 language: python
 python:
-  - "2.7"
-  - "3.5"
   - "3.6"
 install:
-  - pip install numpy
-  - pip install keras
-  - pip install scikit-learn
+  - pip3 install numpy
 
 script:
   ## Include test script(s) here

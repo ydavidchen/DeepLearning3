@@ -25,9 +25,9 @@ def main():
     devMode = False; #set to false when testing actual code
     dirPath = "DL3 Dataset/";
     out_path = 'DL3 Dataset/outputs/'; #includes intermediate outputs
-    devSetFrac = 0.125;
+    devSetFrac = 0.10;
     bSize = 25;
-    eps = 1 if devMode else 50; #use 1 for code testing
+    eps = 1 if devMode else 30; #use 1 for code testing
 
     ## Phase I: Data Loading & Training with Saving:
     ## Reading the train and test meta-data files:
@@ -52,9 +52,9 @@ def main():
     print("Setting up and computing on the model...")
     model = setupModel(optimizer=SGD(momentum=0.9, nesterov=True), n_target=85, metrics=[customF1]);
     print( model.summary() )
-    # callBackList = [EarlyStopping(monitor='val_loss', patience=3, mode='min'),
-    #                 ModelCheckpoint(filepath='weights.best.eda.hdf5', monitor='val_loss', mode='min', verbose=1, save_best_only=True)];
-    callBackList = [ModelCheckpoint(filepath='weights.best.eda.hdf5', monitor='val_loss', mode='min', verbose=1, save_best_only=True)];
+    callBackList = [EarlyStopping(monitor='val_loss', patience=6, mode='min'),
+                    ModelCheckpoint(filepath='weights.best.eda.hdf5', monitor='val_loss', mode='min', verbose=1, save_best_only=True)];
+    # callBackList = [ModelCheckpoint(filepath='weights.best.eda.hdf5', monitor='val_loss', mode='min', verbose=1, save_best_only=True)];
     model.fit(Xtrain,
               ytrain,
               validation_data=(Xvalid, yvalid),
@@ -70,7 +70,7 @@ def main():
         json_file.write(model_json);
     del model_json;
 
-    ## Accuracy (which could be misleading in binary case!)
+    ## Accuracy (which could be misleading in binary case!):
     scores = model.evaluate(Xtrain, ytrain, verbose=0);
     print("Training-set accuracy: %.2f%%" % (scores[1]*100))
     scores = model.evaluate(Xvalid, yvalid, verbose=0);
@@ -133,7 +133,7 @@ def setupModel(optimizer, metrics, n_target, input_shape=(227,227,3), DROPOUT=0.
     z = MaxPooling2D(pool_size=(3,3), strides=(2,2))(z)
     z = BatchNormalization()(z)
 
-    ## 3rd-5th conv layers (variable dimensions; see Krizhevsky et al)
+    ## 3rd-5th conv layers (variable dimensions; see ImageNet paper):
     z = ZeroPadding2D(padding=(1,1))(z)
     z = Conv2D(filters=384, kernel_size=(3,3), strides=(1,1), activation="relu")(z)
 
