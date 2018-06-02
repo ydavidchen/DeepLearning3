@@ -1,9 +1,10 @@
 language: python
+
 python:
   - "3.6"
+
 install:
   - pip3 install numpy
 
 script:
-  ## Include test script(s) here
-  - minimalPyTestcase
+  - coverage run minimalPyTestcase.py
