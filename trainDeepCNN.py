@@ -2,7 +2,7 @@
 # trainDeepCNN.py
 # This script is to be run on the Cloud (GCP, AWS, etc) or Linux cluster
 
-__title__ = "Part 2: Training the Deep Neural Network"
+__title__ = "Part 3: Training the Deep Neural Network"
 __author__ = "David Chen"
 __copyright__ = "Copyright 2018 David Chen"
 __license__ = "MIT"
@@ -78,9 +78,9 @@ def main():
     del scores;
 
     ## Make prediction on training & dev-set fraction:
-    pred = applyModel(model=model, newX=Xtrain);
+    pred = applyModel(model=model, newX=Xtrain, byBatch=True, batch_size=bSize);
     print("Training-set F1 Score: %.2f" % f1_score(ytrain, pred, average='samples') )
-    pred = applyModel(model=model, newX=Xvalid);
+    pred = applyModel(model=model, newX=Xvalid, byBatch=True, batch_size=bSize);
     print("Dev-set F1 Score: %.2f" % f1_score(yvalid, pred, average='samples') )
     del pred;
 
@@ -95,7 +95,7 @@ def main():
 
     print("Making predictions about unknown test data:")
     model.load_weights('weights.best.eda.hdf5');
-    myPredictions = applyModel(model=model, newX=X_norm_test);
+    myPredictions = applyModel(model=model, newX=X_norm_test, byBatch=True, batch_size=bSize);
 
     ## Generate submission file:
     print("==================Creating submission CSV file==================")
@@ -163,13 +163,18 @@ def setupModel(optimizer, metrics, n_target, input_shape=(227,227,3), DROPOUT=0.
     model.compile(loss=loss, optimizer=optimizer, metrics=metrics);
     return model;
 
-def applyModel(model, newX):
+def applyModel(model, newX, byBatch=False, batch_size=None):
     '''
     Make predictions on new data
     :param model: Keras model with architecture & optimizer
     :param newX: new data without target variable, which must be a numpy array with dim=(n,x,y,c)
+    :param byBatch: Should prediction be made by batch? Defaults to false
     '''
-    myPredictions = model.predict(newX).round().astype(np.int);
+    if byBatch:
+        myPredictions = model.predict(newX, batch_size=batch_size).round().astype(np.int);
+    else:
+        del batch_size;
+        myPredictions = model.predict(newX).round().astype(np.int);
     return myPredictions;
 
 def customF1(y_true, y_pred):

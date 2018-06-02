@@ -7,4 +7,4 @@ install:
   - pip3 install numpy
 
 script:
-  - python3 minimalPyTestcase.py
+  - python3 test_cases/minimal.py
