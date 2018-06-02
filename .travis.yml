@@ -7,4 +7,4 @@ install:
   - pip3 install numpy
 
 script:
-  - coverage run minimalPyTestcase.py
+  - python3 minimalPyTestcase.py
