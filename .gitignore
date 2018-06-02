@@ -14,8 +14,8 @@
 *.tar
 *.zip
 *.html
-*.csv
 *.pyc
+*.hdf5
 *.jpg
 *.jpeg
 *.png

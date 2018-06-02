@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/ydavidchen/DeepLearning3.svg?token=UysmqA8KAVt84WN1PXEP&branch=master)](https://travis-ci.com/ydavidchen/DeepLearning3)
+
 # DeepLearning\#3 Coding Challenge
 
 ## Background
@@ -9,17 +11,16 @@
 ## Approach
 
 * Prior to modeling, both the training and test data have been extracted and reshaped as 227x227x3 numpy arrays. See script `processData.py`.
-* The original implementation of ImageNet (AlexNet), later implemented in library Keras, was modified to accommodate the present multitask learning problem (there the number of tasks is 85) with 50 epochs.
+* The original implementation of ImageNet (AlexNet), later implemented in library Keras, was modified to accommodate the present multitask learning problem (there the number of tasks is 85) with up to 30 epochs (with _early stopping_):
   - Instead of "accuracy", a custom implementation of F1 Score was used as the metric for optimization for each epoch.
   - Stochastic gradient descent with 0.9 momentum was used to optimize the _binary_crossentropy_ objective.
-  - A sigmoid final activation layer (instead of softmax proposed by the original ImageNet) was implemented to estimate class labels. These are implemented in the script `trainDeepCNN.py`.
+  - A _sigmoid_ activation layer (instead of _softmax_ proposed by the original ImageNet) was implemented to estimate class labels. These are implemented in the script `trainDeepCNN.py`.
 * Training performance:
-  - On final epoch: ` loss: 0.0101 - customF1: 0.9957 - val_loss: 0.4554 - val_customF1: 0.8506`
-  - Training-set accuracy: 99.95%
-  - Dev-set accuracy: 85.06%
-  - Training-set F1 Score: 1.00
-  - Dev-set F1 Score: 0.85
-
+  - On final epoch (no.26): `loss: 0.1038 - customF1: 0.9417 - val_loss: 0.3351 - val_customF1: 0.8295`
+  - Training-set accuracy: 96.31%
+  - Dev-set accuracy: 82.96%
+  - Training-set F1 Score: 0.96
+  - Dev-set F1 Score: 0.83
 
 ## File Structure
 
@@ -28,7 +29,7 @@
 * `DL3 Dataset`: Directory for data
   - Neither the raw image datasets (>4 and >2Gb for training and test) nor the normalized $(128, 128, 3)$-dimensional `.npy` objects were not uploaded to GitHub due to size limit
   - The `.npy` objects were used for cluster / cloud computing.
-* `Train_Deep_CNN.o142620`: Text file record for training output on Linux cluster.
+* `Train_Deep_CNN.o142829`: Text file record for training output on Linux cluster.
 
 ## Implementation
 
