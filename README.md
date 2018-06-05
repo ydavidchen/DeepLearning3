@@ -16,9 +16,9 @@
   - Stochastic gradient descent with 0.9 momentum was used to optimize the _binary_crossentropy_ objective.
   - A _sigmoid_ activation layer (instead of _softmax_ proposed by the original ImageNet) was implemented to estimate class labels. These are implemented in the script `trainDeepCNN.py`.
 * Training performance:
-  - On final epoch (no.26): `loss: 0.1038 - customF1: 0.9417 - val_loss: 0.3351 - val_customF1: 0.8295`
-  - Training-set accuracy: 96.31%
-  - Dev-set accuracy: 82.96%
+  - On final epoch (no.26): `loss: 0.1113 - customF1: 0.9372 - val_loss: 0.3070 - val_customF1: 0.8368`
+  - Training-set accuracy: 96.29%
+  - Dev-set accuracy: 83.69%
   - Training-set F1 Score: 0.96
   - Dev-set F1 Score: 0.83
 

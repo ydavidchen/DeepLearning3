@@ -26,8 +26,8 @@ def main():
     dirPath = "DL3 Dataset/";
     out_path = 'DL3 Dataset/outputs/'; #includes intermediate outputs
     devSetFrac = 0.10;
-    bSize = 25;
-    eps = 1 if devMode else 30; #use 1 for code testing
+    bSize = 50;
+    eps = 1 if devMode else 25; #use 1 for code testing
 
     ## Phase I: Data Loading & Training with Saving:
     ## Reading the train and test meta-data files:
@@ -106,7 +106,7 @@ def main():
     subm.to_csv(out_path+'submit_DavidChen.csv', index=False);
     print("Submission file created!")
 
-def setupModel(optimizer, metrics, n_target, input_shape=(227,227,3), DROPOUT=0.5, n_category=2, loss='binary_crossentropy'):
+def setupModel(optimizer, metrics, n_target, input_shape=(227,227,3), rate_dropout=0.5, n_category=2, loss='binary_crossentropy'):
     '''
     Function to set up an ImageNet Keras model for fitting a training data set
     Adapted for multi-target prediction
@@ -115,7 +115,7 @@ def setupModel(optimizer, metrics, n_target, input_shape=(227,227,3), DROPOUT=0.
     :param metrics: List of metrics. Either "accuracy" or custom function
     :param n_target: number of target variables
     :param input_shape: Here, it needs to be (x=227,y=227,c=3)
-    :param DROPOUT: Proportion of nodes to dropout (regularization)
+    :param rate_dropout: Proportion of nodes to dropout (regularization)
     :param n_category: number of classes per target variables
     :param loss: Keras' loss function of choice
     '''
@@ -148,10 +148,10 @@ def setupModel(optimizer, metrics, n_target, input_shape=(227,227,3), DROPOUT=0.
 
     ## 2 dense layers:
     z = Dense(4096, activation="relu")(z)
-    z = Dropout(DROPOUT)(z)
+    z = Dropout(rate_dropout)(z)
 
     z = Dense(4096, activation="relu")(z)
-    z = Dropout(DROPOUT)(z)
+    z = Dropout(rate_dropout)(z)
 
     ## Finalize model & adjust dimensions:
     lastDimension = 1*n_target if n_category==2 else n_category*n_target;
