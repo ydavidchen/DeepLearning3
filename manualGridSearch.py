@@ -27,7 +27,7 @@ del main;
 devMode = False; #set to false when testing actual code
 dirPath = "DL3 Dataset/";
 out_path = 'DL3 Dataset/outputs/'; #includes intermediate outputs
-devSetFrac = 0.10;
+devSetFrac = 0.30;
 bSize = 50;
 eps = 1 if devMode else 5; #use 1 for code testing
 

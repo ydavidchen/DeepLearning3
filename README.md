@@ -4,9 +4,9 @@
 
 ## Background
 
-* Problem statement: to predict whether each of $85$ attributes (with unknown identity) based on pixel values
-* Given the correlation structure across features, simple machine-learning models assuming conditional independence (e.g. Naive Bayes) would not be appropriate
-* Deep learning, particularly convolutional neural networks (CNN), has demonstrated robust performance in such problems
+* Problem statement: Predict whether each of 85 attributes (with unknown identity) based on pixel values.
+* Given the correlation structure across features, simple machine-learning models assuming conditional independence (e.g. Naive Bayes) would not be appropriate.
+* Deep learning, particularly convolutional neural networks (CNN), has demonstrated robust performance in similar tasks.
 
 ## Approach
 
@@ -35,9 +35,9 @@
 
 ### System
 
-A local MacOS was used for data processing and normalization as follows:
+Data processing and normalization should be done as follows:
 
-`python processData.py`
+`python3 processData.py`
 
 A Linux cluster (thanks to Dartmouth Research Computing) or cloud (thanks to GCP free trial) were used for training. Shell commands for `conda` virtual environment setup:
 
@@ -54,7 +54,7 @@ conda install -c conda-forge keras
 
 #### Model Architecture
 
-High Performance Computing (HPC) on the Linux cluster was used. Prior to actual code running, both Linux HPC and Google Cloud Platform (GCP) were also used for testing purposes.
+High Performance Computing (HPC, courtesy of Dartmouth) on the Linux cluster was used. Prior to actual execution, both Linux HPC and Google Cloud Platform (GCP) were also used for testing purposes.
 
 The snippet below shows the latest model for submission:
 
@@ -115,21 +115,14 @@ Non-trainable params: 704
 # conda env remove --name DeepLearning3 #Proceed ([y]/n)? y
 ```
 
-With 4x8=32 Linux-cluster CPUs, each _epoch_ takes approximately 18 minutes to run.
+The optimal hyperparameters for stochastic gradient descent (SGD) optimizers were determined by an iterative grid search on a subset of images using the same `customF1` scoring metric. All other hyperparameters were used at their default or according to the original publication (Krezhevsky et al. 2012). With 4x8=32 CPUs, each _epoch_ at batch size of 25 takes approximately 19 minutes to run.
 
 ## Limitations
 
 * Model interpretability and difficulty in grid search
 * System discrepancies (e.g. python and package versions)
 
-## Credit
-
-**Acknowledgements**
-
-* Resources: Dartmouth Research Computing (HPC)
-* Organizer: HackerEarth
-
-**References**
+## References
 
 * Krizhevsky A et al. ImageNet Classification with Deep Convolutional Neural Networks. Advances in Neural Information Processing Systems 25 (NIPS 2012).
   - Implementation by Shikar V. and Dan D. (GitHub)

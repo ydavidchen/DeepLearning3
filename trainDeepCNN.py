@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 # trainDeepCNN.py
-# This script is to be run on the Cloud (GCP, AWS, etc) or Linux cluster
 
 __title__ = "Part 3: Training the Deep Neural Network"
 __author__ = "David Chen"
@@ -8,7 +7,7 @@ __copyright__ = "Copyright 2018 David Chen"
 __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "David Chen"
-__status__ = "Development"
+__status__ = "Production"
 
 from keras import backend as K
 from keras.models import Model, Sequential, model_from_json
@@ -50,9 +49,9 @@ def main():
 
     ## Set up & train the model:
     print("Setting up and computing on the model...")
-    model = setupModel(optimizer=SGD(momentum=0.9, nesterov=True), n_target=85, metrics=[customF1]);
+    model = setupModel(optimizer=SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True), n_target=85, metrics=[customF1]);
     print( model.summary() )
-    callBackList = [EarlyStopping(monitor='val_loss', patience=6, mode='min'),
+    callBackList = [EarlyStopping(monitor='val_loss', patience=5, mode='min'),
                     ModelCheckpoint(filepath='weights.best.eda.hdf5', monitor='val_loss', mode='min', verbose=1, save_best_only=True)];
     # callBackList = [ModelCheckpoint(filepath='weights.best.eda.hdf5', monitor='val_loss', mode='min', verbose=1, save_best_only=True)];
     model.fit(Xtrain,
